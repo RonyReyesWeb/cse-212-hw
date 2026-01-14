@@ -6,9 +6,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 public class PriorityQueueTests
 {
     [TestMethod]
-    // Scenario: Add three items with different priorities and dequeue them.
-    // Expected Result: Items come out in order of highest priority first.
-    // Defect(s) Found: 
+    // Scenario: Dequeue items from a queue with different priorities.
+    // Expected Result: Items are returned from highest to lowest priority. Empty queue throws exception.
+    // Defect(s) Found: Dequeue did not always return the highest priority item first.
     public void TestPriorityQueue_1()
     {
         var pq = new PriorityQueue();
@@ -31,9 +31,9 @@ public class PriorityQueueTests
 
 
     [TestMethod]
-    // Scenario: 
-    // Expected Result: 
-    // Defect(s) Found: 
+    // Scenario: Dequeue items from a queue with multiple priorities, including two items with the same highest priority.
+    // Expected Result: Highest priority items come out first; ties follow FIFO. Dequeueing from empty queue throws an exception.
+    // Defect(s) Found: Dequeue did not handle FIFO order for items with same priority.
     public void TestPriorityQueue_2()
     {
         var pq = new PriorityQueue();
