@@ -9,6 +9,7 @@ public class PriorityQueueTests
     // Scenario: Dequeue items from a queue with different priorities.
     // Expected Result: Items are returned from highest to lowest priority. Empty queue throws exception.
     // Defect(s) Found: Dequeue did not always return the highest priority item first.
+    // Test Result: Passed after fixing Dequeue to correctly find highest priority item.
     public void TestPriorityQueue_1()
     {
         var pq = new PriorityQueue();
@@ -34,6 +35,7 @@ public class PriorityQueueTests
     // Scenario: Dequeue items from a queue with multiple priorities, including two items with the same highest priority.
     // Expected Result: Highest priority items come out first; ties follow FIFO. Dequeueing from empty queue throws an exception.
     // Defect(s) Found: Dequeue did not handle FIFO order for items with same priority.
+    // Test Result: Passed after fixing Dequeue to handle ties correctly.
     public void TestPriorityQueue_2()
     {
         var pq = new PriorityQueue();
