@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Text.Json;
 
 public static class SetsAndMaps
@@ -114,8 +115,37 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        if (word1.Length != word2.Length)
+        {
+            return false;
+        }
+        Dictionary<char, int> letterCount = new Dictionary<char, int>();
+        foreach (char c in word1)
+        {
+            if (letterCount.ContainsKey(c))
+            {
+                letterCount[c]++;
+            }
+            else
+            {
+                letterCount[c] = 1;
+            }
+        }
+
+        foreach (char d in word2)
+        {
+            if (!letterCount.ContainsKey(d))
+            {
+                return false;
+            }
+            letterCount[d]--;
+
+            if (letterCount[d] < 0)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /// <summary>
