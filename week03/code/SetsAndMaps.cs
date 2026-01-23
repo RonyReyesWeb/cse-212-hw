@@ -115,10 +115,11 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
+        word1 = word1.Replace(" ", "").ToLower();
+        word2 = word2.Replace(" ", "").ToLower();
         if (word1.Length != word2.Length)
-        {
             return false;
-        }
+
         Dictionary<char, int> letterCount = new Dictionary<char, int>();
         foreach (char c in word1)
         {
