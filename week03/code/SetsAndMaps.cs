@@ -123,27 +123,19 @@ public static class SetsAndMaps
         foreach (char c in word1)
         {
             if (letterCount.ContainsKey(c))
-            {
                 letterCount[c]++;
-            }
             else
-            {
                 letterCount[c] = 1;
-            }
         }
 
         foreach (char d in word2)
         {
             if (!letterCount.ContainsKey(d))
-            {
                 return false;
-            }
-            letterCount[d]--;
 
+            letterCount[d]--;
             if (letterCount[d] < 0)
-            {
                 return false;
-            }
         }
         return true;
     }
