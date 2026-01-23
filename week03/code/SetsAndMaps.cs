@@ -21,8 +21,46 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        // Create a HashSet to store words we've already seen
+        //check if the word 0(1) lookup to check if a word's reverse exists.
+        HashSet<string> seen = new HashSet<string>();
+
+        // Create a list to store the resulting symmetric pairs.
+        // the list results will be equally to the new list ? 
+        List<string> result = new List<string>();
+
+        // Loop through each word in the input array
+        foreach (string word in words)
+        {
+
+            // if the word 0 and word 1 are equal continue
+            //and it does that because they can not form a symmmetric pair
+            if (word[0] == word[1])
+                continue;
+
+            //convert the value to character array
+            char[] chars = word.ToCharArray();
+
+            //reverse the character array
+            Array.Reverse(chars);
+
+            //conver the caracter array back to string
+            string reversed = new string(chars);
+
+            //check if the reversed word is already in the seen hatsh
+            if (seen.Contains(reversed))
+            {
+                // if yes we found the value
+                result.Add($"{reversed} & {word}");
+            }
+            else
+            {
+                seen.Add(word);
+            }
+        }
+
+        // return values To Array
+        return result.ToArray();
     }
 
     /// <summary>
