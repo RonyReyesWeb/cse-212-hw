@@ -145,7 +145,11 @@ public class LinkedList : IEnumerable<int>
                     if (_head != null)
                         _head.Prev = null;
                 }
+
+                break;
             }
+
+            current = current.Next;
         }
 
     }
