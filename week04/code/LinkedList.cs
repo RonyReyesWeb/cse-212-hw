@@ -32,7 +32,20 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void InsertTail(int value)
     {
-        // TODO Problem 1
+        Node NewNode = new(value);
+
+        if (_tail is null)
+        {
+            _tail = NewNode;
+            _head = NewNode;
+        }
+        else
+        {
+            NewNode.Prev = _tail;
+            _tail.Next = NewNode;
+            _tail = NewNode;
+
+        }
     }
 
 
@@ -64,7 +77,20 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void RemoveTail()
     {
-        // TODO Problem 2
+        if (_head == _tail)
+        {
+            _tail = null;
+            _head = null;
+
+        }
+
+        else if (_tail is not null)
+        {
+            _tail.Prev!.Next = null;
+            _tail = _tail.Prev;
+
+
+        }
     }
 
     /// <summary>
@@ -108,7 +134,20 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void Remove(int value)
     {
-        // TODO Problem 3
+        var current = _head;
+        while (current != null)
+        {
+            if (current.Data == value)
+            {
+                if (current == _head)
+                {
+                    _head = _head.Next;
+                    if (_head != null)
+                        _head.Prev = null;
+                }
+            }
+        }
+
     }
 
     /// <summary>
@@ -168,8 +207,10 @@ public class LinkedList : IEnumerable<int>
     }
 }
 
-public static class IntArrayExtensionMethods {
-    public static string AsString(this IEnumerable array) {
+public static class IntArrayExtensionMethods
+{
+    public static string AsString(this IEnumerable array)
+    {
         return "<IEnumerable>{" + string.Join(", ", array.Cast<int>()) + "}";
     }
 }
