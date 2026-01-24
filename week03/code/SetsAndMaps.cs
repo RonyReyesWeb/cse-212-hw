@@ -22,45 +22,24 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // Create a HashSet to store words we've already seen
-        //check if the word 0(1) lookup to check if a word's reverse exists.
         HashSet<string> seen = new HashSet<string>();
-
-        // Create a list to store the resulting symmetric pairs.
-        // the list results will be equally to the new list ? 
         List<string> result = new List<string>();
-
-        // Loop through each word in the input array
         foreach (string word in words)
         {
-
-            // if the word 0 and word 1 are equal continue
-            //and it does that because they can not form a symmmetric pair
-            if (word[0] == word[1])
+            if (word.Length < 2 || word[0] == word[1])
                 continue;
+            int len = word.Length;
+            char[] reversedChars = new char[len];
+            for (int i = 0; i < len; i++)
+                reversedChars[i] = word[len - 1 - i];
 
-            //convert the value to character array
-            char[] chars = word.ToCharArray();
+            string reversed = new string(reversedChars);
 
-            //reverse the character array
-            Array.Reverse(chars);
-
-            //conver the caracter array back to string
-            string reversed = new string(chars);
-
-            //check if the reversed word is already in the seen hatsh
             if (seen.Contains(reversed))
-            {
-                // if yes we found the value
                 result.Add($"{reversed} & {word}");
-            }
             else
-            {
                 seen.Add(word);
-            }
         }
-
-        // return values To Array
         return result.ToArray();
     }
 
@@ -155,6 +134,23 @@ public static class SetsAndMaps
     /// https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
     /// 
     /// </summary>
+    /// 
+    public class FeatureCollection
+    {
+        public Feature[] Features { get; set; }
+    }
+
+    public class Feature
+    {
+        public Properties Properties { get; set; }
+    }
+
+    public class Properties
+    {
+        public string Place { get; set; }
+        public double? Mag { get; set; }
+    }
+
     public static string[] EarthquakeDailySummary()
     {
         const string uri = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
@@ -163,15 +159,21 @@ public static class SetsAndMaps
         using var jsonStream = client.Send(getRequestMessage).Content.ReadAsStream();
         using var reader = new StreamReader(jsonStream);
         var json = reader.ReadToEnd();
-        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
+        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
 
-        // TODO Problem 5:
-        // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
-        // on those classes so that the call to Deserialize above works properly.
-        // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
-        // 3. Return an array of these string descriptions.
-        return [];
+        List<string> results = new List<string>();
+
+        foreach (var feature in featureCollection.Features)
+        {
+            string place = feature.Properties.Place;
+            double? mag = feature.Properties.Mag;
+
+            results.Add($"{place} - Mag {mag}");
+        }
+
+        return results.ToArray();
     }
+
 }
