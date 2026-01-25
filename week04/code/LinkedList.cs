@@ -144,6 +144,21 @@ public class LinkedList : IEnumerable<int>
                     _head = _head.Next;
                     if (_head != null)
                         _head.Prev = null;
+                    else
+                        _tail = null;
+                }
+
+                else if (current == _tail)
+                {
+                    _tail = _tail.Prev;
+                    if (_tail != null)
+                        _tail.Next = null;
+                }
+
+                else
+                {
+                    current.Prev!.Next = current.Next;
+                    current.Next!.Prev = current.Prev;
                 }
 
                 break;
@@ -197,8 +212,12 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public IEnumerable Reverse()
     {
-        // TODO Problem 5
-        yield return 0; // replace this line with the correct yield return statement(s)
+        var curr = _tail;
+        while (curr is not null)
+        {
+            yield return curr.Data;
+            curr = curr.Prev;
+        }
     }
 
     public override string ToString()
