@@ -1,5 +1,6 @@
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 public static class Recursion
 {
@@ -128,7 +129,7 @@ public static class Recursion
         decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
 
         remember[s] = ways;
-        
+
         return ways;
     }
 
@@ -147,7 +148,22 @@ public static class Recursion
     /// </summary>
     public static void WildcardBinary(string pattern, List<string> results)
     {
-        // TODO Start Problem 4
+        if (pattern == null) return;
+
+        if (!pattern.Contains('*'))
+        {
+            results.Add(pattern);
+            return;
+        }
+
+        //finding the first * index
+        int index = pattern.IndexOf('*');
+
+        string pattern1 = pattern.Substring(0, index) + "0" + pattern.Substring(index + 1);
+        WildcardBinary(pattern1, results);
+
+        string pattern2 = pattern.Substring(0, index) + "1" + pattern.Substring(index + 1);
+        WildcardBinary(pattern2, results);
     }
 
     /// <summary>
